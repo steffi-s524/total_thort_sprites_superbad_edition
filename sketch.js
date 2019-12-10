@@ -3,6 +3,7 @@ var left, right, up, down;
 var evan;
 var road;
 var hit = false;
+var playerHitHouse = false;
 var house;
 var theme = new Audio('themesong.mp3');
 var fogel = new Audio('fakeid.mp3');
@@ -155,7 +156,6 @@ function keyMovements() {
 function collisionChecking() {
 
 	var playerHitCop = false;
-	var playerHithouse = false;
 
 	/// Cop Boundaries
 	var copX = x;
