@@ -30,14 +30,19 @@ function setup() {
   xspeed = 5;
   yspeed = 5;
   //move evan
-  e = new Player(width / 2, height / 2);
-  for (var i = 0; i < 5; i++) {
-    e.opponents.push(new Opponent());
-  }
+  // e = new Player(width / 2, height / 2);
+  // for (var i = 0; i < 5; i++) {
+  //   e.opponents.push(new Opponent());
+  // }
 }
 
 function draw() {
   background(road);
+
+  e = new Player(width / 2, height / 2);
+  for (var i = 0; i < 5; i++) {
+    e.opponents.push(new Opponent());
+  }
 
 	keyMovements();
 	collisionChecking();
@@ -131,10 +136,10 @@ function keyMovements() {
     e.move(0, e.speed);
   }
   if (left) {
-    E.move(-E.speed, 0);
+    e.move(-e.speed, 0);
   }
   if (right) {
-    E.move(E.speed, 0);
+    e.move(e.speed, 0);
   }
 }
 
@@ -151,8 +156,8 @@ function collisionChecking() {
 	var copHeight = 179;
 
 	/// Player Boundaries
-	var playerX = E.position.x;
-	var playerY = E.position.y;
+	var playerX = e.position.x;
+	var playerY = e.position.y;
 	var playerWidth = 78;
 	var playerHeight = 45;
 
