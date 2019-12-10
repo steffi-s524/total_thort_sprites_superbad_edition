@@ -1,6 +1,6 @@
 //variables
 var left, right, up, down;
-var Evan;
+var evan;
 var road;
 var hit = false;
 var house;
@@ -16,7 +16,7 @@ let yspeed;
 let cop;
 
 function preload() {
-  Evan = loadImage("bestcera.png");
+  evan = loadImage("bestcera.png");
   cop = loadImage("hader.png");
   road = loadImage("gamebackground.jpg");
   house = loadImage("partyhouse.png");
@@ -30,9 +30,9 @@ function setup() {
   xspeed = 5;
   yspeed = 5;
   //move evan
-  E = new Player(width / 2, height / 2);
+  e = new Player(width / 2, height / 2);
   for (var i = 0; i < 5; i++) {
-    E.opponents.push(new Opponent());
+    e.opponents.push(new Opponent());
   }
 }
 
@@ -47,7 +47,7 @@ function draw() {
 	theme.play();
 
   if (hit == false) {
-	  E.display();
+	  e.display();
 
 	  x = x + xspeed;
 	  y = y + yspeed;
@@ -125,10 +125,10 @@ function keyReleased() {
 
 function keyMovements() {
   if (up) {
-    E.move(0, -E.speed);
+    e.move(0, -e.speed);
   }
   if (down) {
-    E.move(0, E.speed);
+    e.move(0, e.speed);
   }
   if (left) {
     E.move(-E.speed, 0);
@@ -198,7 +198,7 @@ Player.prototype.display = function() {
   push();
   this.displayPosition = p5.Vector.lerp(this.position, this.displayPosition, 0.9);
   translate(this.displayPosition.x, this.displayPosition.y);
-  image(Evan, 0, 0, 78, 45);
+  image(evan, 0, 0, 78, 45);
   pop();
 
   // for (var i = 0; i < this.opponents.length; i++) {
