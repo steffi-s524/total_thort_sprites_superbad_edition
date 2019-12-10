@@ -27,8 +27,8 @@ function setup() {
 	textSize(25);
   x = random(width);
   y = random(height);
-  xspeed = 15;
-  yspeed = 15;
+  xspeed = 5;
+  yspeed = 5;
   //move evan
   E = new Player(width / 2, height / 2);
   for (var i = 0; i < 5; i++) {
