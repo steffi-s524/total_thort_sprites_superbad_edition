@@ -52,7 +52,7 @@ function draw() {
 
   image(cop, x, y, 250, 179);
   image(house, 900, 1);
-	// theme.play();
+	theme.play();
   //e.display();
   // e.move();
 
@@ -155,6 +155,7 @@ function keyMovements() {
 function collisionChecking() {
 
 	var playerHitCop = false;
+	var playerHithouse = false;
 
 	/// Cop Boundaries
 	var copX = x;
