@@ -4,6 +4,9 @@ var Evan;
 var road;
 var hit = false;
 var house;
+var theme = new Audio('themesong.mp3');
+var fogel = new Audio('fakeid.mp3');
+var slater = new Audio('copspeech.mp3');
 
 let x;
 let y;
@@ -41,6 +44,7 @@ function draw() {
 
   image(cop, x, y, 250, 179);
   image(house, 900, 1);
+	theme.play();
 
   if (hit == false) {
 	  E.display();
@@ -67,7 +71,7 @@ function draw() {
 else {
 	push();
 	textAlign(CENTER);
-	text("COP GOT PLAYER", width/2, height/2);
+	text("YOU LOST", width/2, height/2);
 	pop();
 }
 
@@ -140,24 +144,39 @@ function collisionChecking() {
 
 	var playerHitCop = false;
 
-	/// Cop rectangle
+	/// Cop Boundaries
 	var copX = x;
 	var copY = y;
 	var copWidth = 250;
 	var copHeight = 179;
 
-	/// Player Rectangle
+	/// Player Boundaries
 	var playerX = E.position.x;
 	var playerY = E.position.y;
 	var playerWidth = 78;
 	var playerHeight = 45;
 
+	//House Boundaries
+	var houseX = 900;
+	var houseY = 1;
+	var houseWidth = 250;
+	var houseHeight = 250;
+
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
-		console.log("COLLISION!");
+		slater.play();
 	}
 
 	if (playerHitCop == true) {
+		hit = true;
+	}
+
+	if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
+		playerHithouse = true;
+		fogel.play();
+	}
+
+	if (playerHithouse == true) {
 		hit = true;
 	}
 
