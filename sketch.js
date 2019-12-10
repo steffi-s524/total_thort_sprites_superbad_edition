@@ -187,13 +187,13 @@ function collisionChecking() {
 	}
 
 	if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
-		playerHithouse = true;
+		playerHitHouse = true;
     background(255,255,255);
     text("YOU WON", width/2, height/2);
 		fogel.play();
 	}
 
-	if (playerHithouse == true) {
+	if (playerHitHouse == true) {
 		hit = true;
 	}
 
