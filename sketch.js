@@ -15,6 +15,8 @@ let xspeed;
 let yspeed;
 let cop;
 
+var e;
+
 function preload() {
   evan = loadImage("bestcera.png");
   cop = loadImage("hader.png");
@@ -24,35 +26,39 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //createCanvas(1000, 700);
 	textSize(25);
   x = random(width);
   y = random(height);
   xspeed = 5;
   yspeed = 5;
   //move evan
-  // e = new Player(width / 2, height / 2);
-  // for (var i = 0; i < 5; i++) {
-  //   e.opponents.push(new Opponent());
-  // }
+  e = new Player(width / 2, height / 2);
+  for (var i = 0; i < 5; i++) {
+    e.opponents.push(new Opponent());
+  }
 }
 
 function draw() {
   background(road);
 
-  e = new Player(width / 2, height / 2);
-  for (var i = 0; i < 5; i++) {
-    e.opponents.push(new Opponent());
-  }
+  // e = new Player(width / 2, height / 2);
+  // for (var i = 0; i < 5; i++) {
+  //   e.opponents.push(new Opponent());
+  // }
 
 	keyMovements();
 	collisionChecking();
 
   image(cop, x, y, 250, 179);
   image(house, 900, 1);
-	theme.play();
+	// theme.play();
+  //e.display();
+  // e.move();
 
   if (hit == false) {
 	  e.display();
+    e.move();
 
 	  x = x + xspeed;
 	  y = y + yspeed;
@@ -76,6 +82,7 @@ function draw() {
 else {
 	push();
 	textAlign(CENTER);
+  background(255,255,255);
 	text("YOU LOST", width/2, height/2);
 	pop();
 }
@@ -169,6 +176,8 @@ function collisionChecking() {
 
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
+    background(255,255,255);
+    text("YOU LOST", width/2, height/2);
 		slater.play();
 	}
 
@@ -178,6 +187,8 @@ function collisionChecking() {
 
 	if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHithouse = true;
+    background(255,255,255);
+    text("YOU WON", width/2, height/2);
 		fogel.play();
 	}
 
