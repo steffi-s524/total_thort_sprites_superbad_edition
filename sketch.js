@@ -1,9 +1,13 @@
 //variables
 var left, right, up, down;
-var Evan;
+var evan;
 var road;
 var hit = false;
+var playerHitHouse = false;
 var house;
+var theme = new Audio('themesong.mp3');
+var fogel = new Audio('fakeid.mp3');
+var slater = new Audio('copspeech.mp3');
 
 let x;
 let y;
@@ -12,8 +16,10 @@ let xspeed;
 let yspeed;
 let cop;
 
+var e;
+
 function preload() {
-  Evan = loadImage("bestcera.png");
+  evan = loadImage("bestcera.png");
   cop = loadImage("hader.png");
   road = loadImage("gamebackground.jpg");
   house = loadImage("partyhouse.png");
@@ -21,29 +27,42 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //createCanvas(1000, 700);
 	textSize(25);
   x = random(width);
   y = random(height);
-  xspeed = 15;
-  yspeed = 15;
+  xspeed = 5;
+  yspeed = 5;
   //move evan
-  E = new Player(width / 2, height / 2);
+  e = new Player(width / 2, height / 2);
   for (var i = 0; i < 5; i++) {
-    E.opponents.push(new Opponent());
+    e.opponents.push(new Opponent());
   }
+
+  theme.play();
+
+
 }
 
 function draw() {
   background(road);
+
+  // e = new Player(width / 2, height / 2);
+  // for (var i = 0; i < 5; i++) {
+  //   e.opponents.push(new Opponent());
+  // }
 
 	keyMovements();
 	collisionChecking();
 
   image(cop, x, y, 250, 179);
   image(house, 900, 1);
+  //e.display();
+  // e.move();
 
   if (hit == false) {
-	  E.display();
+	  e.display();
+    e.move();
 
 	  x = x + xspeed;
 	  y = y + yspeed;
@@ -67,7 +86,8 @@ function draw() {
 else {
 	push();
 	textAlign(CENTER);
-	text("COP GOT PLAYER", width/2, height/2);
+  background(255,255,255);
+	text("YOU LOST", width/2, height/2);
 	pop();
 }
 
@@ -90,7 +110,9 @@ else {
 }
 
 function keyPressed() {
+  console.log("press");
   if (key === "ArrowUp") {
+    console.log("UP");
     up = true;
   }
   if (key === "ArrowDown") {
@@ -121,16 +143,17 @@ function keyReleased() {
 
 function keyMovements() {
   if (up) {
-    E.move(0, -E.speed);
+    console.log("moving up...");
+    e.move(0, -e.speed);
   }
   if (down) {
-    E.move(0, E.speed);
+    e.move(0, e.speed);
   }
   if (left) {
-    E.move(-E.speed, 0);
+    e.move(-e.speed, 0);
   }
   if (right) {
-    E.move(E.speed, 0);
+    e.move(e.speed, 0);
   }
 }
 
@@ -140,26 +163,45 @@ function collisionChecking() {
 
 	var playerHitCop = false;
 
-	/// Cop rectangle
+	/// Cop Boundaries
 	var copX = x;
 	var copY = y;
 	var copWidth = 250;
 	var copHeight = 179;
 
-	/// Player Rectangle
-	var playerX = E.position.x;
-	var playerY = E.position.y;
+	/// Player Boundaries
+	var playerX = e.position.x;
+	var playerY = e.position.y;
 	var playerWidth = 78;
 	var playerHeight = 45;
 
+	//House Boundaries
+	var houseX = 900;
+	var houseY = 1;
+	var houseWidth = 250;
+	var houseHeight = 250;
+
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
-		console.log("COLLISION!");
+    background(255,255,255);
+    text("YOU LOST", width/2, height/2);
+		slater.play();
 	}
 
 	if (playerHitCop == true) {
 		hit = true;
 	}
+
+	// if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
+	// 	playerHitHouse = true;
+  //   background(255,255,255);
+  //   text("YOU WON", width/2, height/2);
+	// 	fogel.play();
+	// }
+  //
+	// if (playerHitHouse == true) {
+	// 	hit = true;
+	// }
 
 }
 
@@ -176,10 +218,13 @@ let Player = function(startX, startY) {
 }
 
 Player.prototype.display = function() {
+
+  console.log("Position should be: " + this.position.x + ", " + this.position.y);
+
   push();
   this.displayPosition = p5.Vector.lerp(this.position, this.displayPosition, 0.9);
   translate(this.displayPosition.x, this.displayPosition.y);
-  image(Evan, 0, 0, 78, 45);
+  image(evan, 0, 0, 78, 45);
   pop();
 
   // for (var i = 0; i < this.opponents.length; i++) {
@@ -190,6 +235,7 @@ Player.prototype.display = function() {
 }
 
 Player.prototype.move = function(xMove, yMove) {
+
   this.position.x += xMove;
   this.position.y += yMove;
 
