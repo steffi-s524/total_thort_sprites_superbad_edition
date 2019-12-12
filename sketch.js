@@ -1,13 +1,12 @@
 //variables
 var left, right, up, down;
-var evan;
+var Evan;
 var road;
 var hit = false;
-var playerHitHouse = false;
 var house;
-var theme = new Audio('themesong.mp3');
-var fogel = new Audio('fakeid.mp3');
-var slater = new Audio('copspeech.mp3');
+var theme;
+var fogel;
+var slater;
 
 let x;
 let y;
@@ -16,53 +15,42 @@ let xspeed;
 let yspeed;
 let cop;
 
-var e;
-
 function preload() {
-  evan = loadImage("bestcera.png");
+  Evan = loadImage("bestcera.png");
   cop = loadImage("hader.png");
   road = loadImage("gamebackground.jpg");
   house = loadImage("partyhouse.png");
+  theme = loadSound("themesong.mp3")
+  fogel = loadSound("fakeid.mp3")
+  slater = loadSound("copspeech.mp3")
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //createCanvas(1000, 700);
 	textSize(25);
+  theme.play();
   x = random(width);
   y = random(height);
-  xspeed = 5;
-  yspeed = 5;
+  xspeed = 15;
+  yspeed = 15;
   //move evan
-  e = new Player(width / 2, height / 2);
+  E = new Player(width / 2, height / 2);
   for (var i = 0; i < 5; i++) {
-    e.opponents.push(new Opponent());
+    E.opponents.push(new Opponent());
   }
-
-  theme.play();
-
-
 }
 
 function draw() {
   background(road);
-
-  // e = new Player(width / 2, height / 2);
-  // for (var i = 0; i < 5; i++) {
-  //   e.opponents.push(new Opponent());
-  // }
 
 	keyMovements();
 	collisionChecking();
 
   image(cop, x, y, 250, 179);
   image(house, 900, 1);
-  //e.display();
-  // e.move();
 
   if (hit == false) {
-	  e.display();
-    e.move();
+	  E.display();
 
 	  x = x + xspeed;
 	  y = y + yspeed;
@@ -86,8 +74,7 @@ function draw() {
 else {
 	push();
 	textAlign(CENTER);
-  background(255,255,255);
-	text("YOU LOST", width/2, height/2);
+	text("COP GOT PLAYER", width/2, height/2);
 	pop();
 }
 
@@ -110,9 +97,7 @@ else {
 }
 
 function keyPressed() {
-  console.log("press");
   if (key === "ArrowUp") {
-    console.log("UP");
     up = true;
   }
   if (key === "ArrowDown") {
@@ -143,17 +128,16 @@ function keyReleased() {
 
 function keyMovements() {
   if (up) {
-    console.log("moving up...");
-    e.move(0, -e.speed);
+    E.move(0, -E.speed);
   }
   if (down) {
-    e.move(0, e.speed);
+    E.move(0, E.speed);
   }
   if (left) {
-    e.move(-e.speed, 0);
+    E.move(-E.speed, 0);
   }
   if (right) {
-    e.move(e.speed, 0);
+    E.move(E.speed, 0);
   }
 }
 
@@ -162,47 +146,42 @@ function keyMovements() {
 function collisionChecking() {
 
 	var playerHitCop = false;
+  var playerHitHouse = false;
 
-	/// Cop Boundaries
+	/// Cop rectangle
 	var copX = x;
 	var copY = y;
 	var copWidth = 250;
 	var copHeight = 179;
 
-	/// Player Boundaries
-	var playerX = e.position.x;
-	var playerY = e.position.y;
+	/// Player Rectangle
+	var playerX = E.position.x;
+	var playerY = E.position.y;
 	var playerWidth = 78;
 	var playerHeight = 45;
 
-	//House Boundaries
-	var houseX = 900;
-	var houseY = 1;
-	var houseWidth = 250;
-	var houseHeight = 250;
-
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
-    background(255,255,255);
-    text("YOU LOST", width/2, height/2);
-		slater.play();
+		console.log("COLLISION!");
+    background (255,255,255);
+    textAlign(CENTER);
+  	text("YOU LOST", width/2, height/2);
+    slater.play();
 	}
-
 	if (playerHitCop == true) {
 		hit = true;
 	}
-
-	// if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
-	// 	playerHitHouse = true;
-  //   background(255,255,255);
-  //   text("YOU WON", width/2, height/2);
-	// 	fogel.play();
-	// }
-  //
-	// if (playerHitHouse == true) {
-	// 	hit = true;
-	// }
-
+  if (collideRectRect(playerX,playerY,playerWidth,playerHeight,houseX,houseY,houseWidth,houseHeight,) == true) {
+		playerHitHouse = true;
+		console.log("COLLISION!");
+    background (255,255,255);
+    textAlign(CENTER);
+  	text("YOU WON", width/2, height/2);
+    fogel.play();
+	}
+	if (playerHitHouse == true) {
+		hit = true;
+	}
 }
 
 
@@ -218,13 +197,10 @@ let Player = function(startX, startY) {
 }
 
 Player.prototype.display = function() {
-
-  console.log("Position should be: " + this.position.x + ", " + this.position.y);
-
   push();
   this.displayPosition = p5.Vector.lerp(this.position, this.displayPosition, 0.9);
   translate(this.displayPosition.x, this.displayPosition.y);
-  image(evan, 0, 0, 78, 45);
+  image(Evan, 0, 0, 78, 45);
   pop();
 
   // for (var i = 0; i < this.opponents.length; i++) {
@@ -235,7 +211,6 @@ Player.prototype.display = function() {
 }
 
 Player.prototype.move = function(xMove, yMove) {
-
   this.position.x += xMove;
   this.position.y += yMove;
 
