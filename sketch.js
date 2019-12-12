@@ -74,7 +74,7 @@ function draw() {
 else {
 	push();
 	textAlign(CENTER);
-	text("COP GOT PLAYER", width/2, height/2);
+	text("YOU LOST", width/2, height/2);
 	pop();
 }
 
@@ -169,8 +169,8 @@ function collisionChecking() {
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
 		console.log(" CP COLLISION!");
-    background(255,255,255);
-    text("YOU LOST", width/2, height/2);
+    // background(255,255,255);
+    // text("YOU LOST", width/2, height/2);
     slater.play();
 	}
 
@@ -180,8 +180,8 @@ function collisionChecking() {
   if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerIntersectHouse = true;
 		console.log("HP COLLISION!");
-    background(255,255,255);
-    text("YOU LOST", width/2, height/2);
+    // background(255,255,255);
+    text("YOU WON", width/2, height/2);
     fogel.play();
 	}
 
