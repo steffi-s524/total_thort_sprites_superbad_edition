@@ -2,6 +2,7 @@ var left, right, up, down;
 var Evan;
 var road;
 var hit = false;
+var intersect = false;
 var house;
 var theme = new Audio("themesong.mp3");
 var fogel = new Audio("fakeid.mp3");
@@ -145,7 +146,7 @@ function keyMovements() {
 function collisionChecking() {
 
 	var playerHitCop = false;
-  var playerHitHouse = false;
+  var playerIntersectHouse = false;
 
 	/// Cop rectangle
 	var copX = x;
@@ -160,8 +161,8 @@ function collisionChecking() {
 	var playerHeight = 45;
 
   /// House Rectangle
-	var houseX = E.position.x;
-	var houseY = E.position.y;
+	var houseX = 250;
+	var houseY = 100;
 	var houseWidth = 250;
 	var houseHeight = 250;
 
@@ -177,15 +178,15 @@ function collisionChecking() {
 		hit = true;
 	}
   if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
-		playerHitHouse = true;
+		playerIntersectHouse = true;
 		console.log("HP COLLISION!");
     background(255,255,255);
     text("YOU LOST", width/2, height/2);
     fogel.play();
 	}
 
-	if (playerHitHouse == true) {
-		hit = true;
+	if (playerIntersectHouse == true) {
+		intersect = true;
 	}
 
 }
