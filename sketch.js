@@ -3,7 +3,9 @@ var Evan;
 var road;
 var hit = false;
 var house;
-var theme;
+var theme = new Audio("themesong.mp3");
+var fogel = new Audio("fakeid.mp3");
+var slater = new Audio("copspeech.mp3");
 var fogel;
 var slater;
 
@@ -20,9 +22,6 @@ function preload() {
   cop = loadImage("hader.png");
   road = loadImage("gamebackground.jpg");
   house = loadImage("partyhouse.png");
-  theme  = loadSound("themesong.mp3");
-  fogel  = loadSound("fakeid.mp3");
-  slater  = loadSound("copspeech.mp3");
 }
 
 function setup() {
