@@ -160,6 +160,12 @@ function collisionChecking() {
 	var playerWidth = 78;
 	var playerHeight = 45;
 
+  /// House Rectangle
+	var houseX = E.position.x;
+	var houseY = E.position.y;
+	var houseWidth = 250;
+	var houseHeight = 250;
+
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
 		console.log("COLLISION!");
