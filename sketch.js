@@ -1,4 +1,3 @@
-//variables
 var left, right, up, down;
 var Evan;
 var road;
@@ -7,6 +6,7 @@ var house;
 var theme;
 var fogel;
 var slater;
+
 
 let x;
 let y;
@@ -20,19 +20,19 @@ function preload() {
   cop = loadImage("hader.png");
   road = loadImage("gamebackground.jpg");
   house = loadImage("partyhouse.png");
-  theme = loadSound("themesong.mp3")
-  fogel = loadSound("fakeid.mp3")
-  slater = loadSound("copspeech.mp3")
+  theme  = loadSound("themesong.mp3");
+  fogel  = loadSound("fakeid.mp3");
+  slater  = loadSound("copspeech.mp3");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 	textSize(25);
-  theme.play();
   x = random(width);
   y = random(height);
   xspeed = 15;
   yspeed = 15;
+  theme.play();
   //move evan
   E = new Player(width / 2, height / 2);
   for (var i = 0; i < 5; i++) {
@@ -168,26 +168,27 @@ function collisionChecking() {
 
 	if (collideRectRect(copX,copY,copWidth,copHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitCop = true;
-		console.log("COLLISION!");
-    background (255,255,255);
-    textAlign(CENTER);
-  	text("YOU LOST", width/2, height/2);
+		console.log(" CP COLLISION!");
+    background(255,255,255);
+    text("YOU LOST", width/2, height/2);
     slater.play();
 	}
+
 	if (playerHitCop == true) {
 		hit = true;
 	}
-  if (collideRectRect(playerX,playerY,playerWidth,playerHeight,houseX,houseY,houseWidth,houseHeight,) == true) {
+  if (collideRectRect(houseX,houseY,houseWidth,houseHeight,playerX,playerY,playerWidth,playerHeight) == true) {
 		playerHitHouse = true;
-		console.log("COLLISION!");
-    background (255,255,255);
-    textAlign(CENTER);
-  	text("YOU WON", width/2, height/2);
+		console.log("HP COLLISION!");
+    background(255,255,255);
+    text("YOU LOST", width/2, height/2);
     fogel.play();
 	}
+
 	if (playerHitHouse == true) {
 		hit = true;
 	}
+
 }
 
 
